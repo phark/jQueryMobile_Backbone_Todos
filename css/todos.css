@@ -38,3 +38,22 @@ body {
   background: #eeeeee;
   color: #333333;
 }
+
+div.done {
+  text-decoration: line-through;
+}
+
+.ui-checkbox .ui-btn-corner-all {
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+border-radius: 0;
+}
+.ui-checkbox .ui-btn-up-c, .ui-checkbox .ui-btn-hover-c {
+  border: none;
+  background: #F0F0F0;
+  background-image: -webkit-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
+  background-image: -moz-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
+  background-image: -ms-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
+  background-image: -o-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
+  background-image: linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end)*/);
+}

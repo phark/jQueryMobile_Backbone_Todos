@@ -4,7 +4,7 @@
 	<title>Todos</title> 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="js/jquerymobile/1.0/jquery.mobile.css" />
-	<!--link rel="stylesheet" href="css/todos.css" /-->
+	<link rel="stylesheet" href="css/todos.css" />
 	<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
 	<!--script type="text/javascript" src="js/json2.js"></script-->
 	<!-- This has to come before the jquery.mobile script because it triggers the mobileinit event -->
@@ -23,7 +23,11 @@
 			<h1>Todos</h1>
 			<a href="" class="add" data-icon="plus" data-iconpos="notext" class="ui-btn-right">Add</a>
 		</div>
-	 	<div data-role="content"></div>
+	 	<div data-role="content">
+		 	<div data-role="controlgroup" id="todoListContainer">
+		    
+			</div>
+		</div>
 		<div data-role="footer" data-position="fixed"></div>
 	</div>
 
@@ -38,11 +42,20 @@
 
 <!-- Templates -->
 
+<script type="text/template" id="listItemView">
+	<form>
+		<input type="checkbox" name="done" id="done-item-<%=id%>" <%= done ? 'checked="checked"' : ''%> value="true"/>
+		<label for="done-item-<%=id%>"><%=content%></label>
+	</form>
+</script>
+
+<script type="text/template" id="listItemEditView">
+	<input type="text" value="<%=content%>"/>
+</script>
+
 <script type="text/template" id="itemDetailTemplate">
 	<form>
 	    <div class="todo <%= done ? 'done' : '' %>">
-		  <input type="checkbox" name="done" id="done-item-<%= id %>" <%= done ? 'checked="checked"' : ''%>/>
-		  <label for="done-item-<%= id %>">Done?</label>
 	      <input class="todo-input" name="content" type="text" value="<%= content %>" />
 		  <a href="#" data-theme="e" data-role="button" class="save">Save</a>
 	    </div>
@@ -50,6 +63,36 @@
 	</form>
 </script>
 
+<script type="text/template" id="todoFooter">
+	<div>
+		<% if((done + remaining) > 0) { %>
+			<div style="float:left" class="todoCount"><h1><%= remaining %> item<%= remaining > 0 ? 's' : '' %> left</h1></div>
+			<div style="float:right" class="clear">
+				<h1>
+					<a href="#" class="clearDone">Clear <%= done %> completed item<%= done > 0 ? 's' : '' %></a>
+				</h1></div>
+		<% } %>
+	</div>	
+</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -71,8 +71,6 @@ Backbone.sync = function(method, model, options) {
 
   var resp;
 
-  console.log('sync model', model, 'method', method, 'options', options)
-
   // console.log('model.localStorage:')
   if(model.localStorage) {
 	// console.log(model.localStorage)
