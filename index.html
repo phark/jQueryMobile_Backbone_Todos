@@ -28,7 +28,7 @@
 		    
 			</div>
 		</div>
-		<div data-role="footer" data-position="fixed"></div>
+		<div data-role="footer" data-position="fixed" id="footer"></div>
 	</div>
 
 	<div data-role="page" id="itemDetail">
@@ -66,11 +66,22 @@
 <script type="text/template" id="todoFooter">
 	<div class="todo-list-footer">
 		<% if((done + remaining) > 0) { %>
-			<div class="todoCount"><h1></h1></div>
+			<div class="todoCount">
+				<h1>
+				<% if(remaining > 0) { %>
+					<%= remaining %> item<%= remaining > 1 ? 's' : '' %> left
+				<% } %>	
+				</h1>
+			</div>
 			<div class="clear">
 				<h1>
-					<a href="#" class="clearDone"></a>
-				</h1></div>
+					<a href="#" class="clearDone">
+						<% if(done > 0) { %>
+							Clear <%= done %> completed item<%= done > 1 ? 's' : '' %>
+						<% } %>		
+					</a>
+				</h1>
+			</div>
 		<% } %>
 	</div>	
 </script>

@@ -70,42 +70,7 @@
             return todo.get('order');
         }
     });
-
-    window.FooterView = Backbone.View.extend({
-      events: {
-        'click a.clearDone' : 'clearDone'
-      },
-      initialize: function() {
-
-        _.bindAll(this, '_update');
-
-        this.template = _.template($('#todoFooter').html());
-        this.collection.bind('change', this._update, this);
-
-        this.remainingTemplate = _.template($('#remainingTodos').html());
-        this.doneTemplate = _.template($('#doneTodos').html());
-      },
-      render: function() {
-        $(this.el).html(this.template({
-          done: this.collection.done().length,
-          remaining: this.collection.remaining().length
-        }));
-
-        this._update();
-
-        return this;
-      },
-      clearDone: function(e) {
-        e.preventDefault();
-        _.each(this.collection.done(), function(todo){ todo.destroy(); });
-      },
-      _update: function() {
-        
-        this.$('.todoCount h1').html(this.remainingTemplate({remaining: this.collection.remaining().length}));  
-        this.$('.clearDone').html(this.doneTemplate({done: this.collection.done().length}));  
-      }
-    })
-                  
+                 
     /*
      * List Read View
      */
@@ -115,9 +80,6 @@
         'click a.add' : 'add'
       },
       initialize: function() {
-
-        _.bindAll(this, '_renderFooter');
-        this.renderFooter = _.once(this._renderFooter);
 
         this.footerView = new FooterView({collection: this.collection});
 
@@ -134,9 +96,8 @@
           cg$.append(item.render().el).trigger('create');
         },this);  
         
-        this.renderFooter();
-
-        this.footerView._update();
+        // this.renderFooter();
+        $(this.el).find("[data-role=footer]").html(this.footerView.render().el);
         
         $(this.el).trigger('create');
 
@@ -147,9 +108,6 @@
       add:function(e) {
           e.preventDefault();
           window.TodosRouter.navigate("new-todo-detail", true);  
-      },
-      _renderFooter: function() {
-        $(this.el).find("[data-role=footer]").html(this.footerView.render().el);
       }
     });
     
@@ -186,7 +144,41 @@
         window.TodosRouter.navigate("todo-detail/"+this.model.id, true);
       }
     });
-   
+
+    /**
+      * Footer
+      */
+     window.FooterView = Backbone.View.extend({
+      events: {
+        'click a.clearDone' : 'clearDone'
+      },
+      initialize: function() {
+
+        // _.bindAll(this, '_update');
+
+        this.template = _.template($('#todoFooter').html());
+        this.collection.bind('change', this.render, this);
+        this.collection.bind('destroy', this.render, this);
+
+        // this.remainingTemplate = _.template($('#remainingTodos').html());
+        // this.doneTemplate = _.template($('#doneTodos').html());
+      },
+      render: function() {
+        $(this.el).html(this.template({
+          done: this.collection.done().length,
+          remaining: this.collection.remaining().length
+        }));
+
+        this.delegateEvents();
+
+        return this;
+      },
+      clearDone: function(e) {
+        e.preventDefault();
+        _.each(this.collection.done(), function(todo){ todo.destroy(); });
+      }
+    })
+ 
     /*
      * List Edit View
      */
