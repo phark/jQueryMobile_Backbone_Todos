@@ -76,22 +76,33 @@
         'click a.clearDone' : 'clearDone'
       },
       initialize: function() {
+
+        _.bindAll(this, '_update');
+
         this.template = _.template($('#todoFooter').html());
-        this.collection.bind('change', this.render, this);
+        this.collection.bind('change', this._update, this);
+
+        this.remainingTemplate = _.template($('#remainingTodos').html());
+        this.doneTemplate = _.template($('#doneTodos').html());
       },
       render: function() {
-        console.log('render footer')
         $(this.el).html(this.template({
           done: this.collection.done().length,
           remaining: this.collection.remaining().length
         }));
 
+        this._update();
+
         return this;
       },
       clearDone: function(e) {
         e.preventDefault();
-
         _.each(this.collection.done(), function(todo){ todo.destroy(); });
+      },
+      _update: function() {
+        
+        this.$('.todoCount h1').html(this.remainingTemplate({remaining: this.collection.remaining().length}));  
+        this.$('.clearDone').html(this.doneTemplate({done: this.collection.done().length}));  
       }
     })
                   
@@ -104,6 +115,9 @@
         'click a.add' : 'add'
       },
       initialize: function() {
+
+        _.bindAll(this, '_renderFooter');
+        this.renderFooter = _.once(this._renderFooter);
 
         this.footerView = new FooterView({collection: this.collection});
 
@@ -118,17 +132,24 @@
         _.each(this.collection.models, function(model) {
           var item = new TodoListItemView({model: model})
           cg$.append(item.render().el).trigger('create');
-        },this)  
+        },this);  
         
-        $(this.el).find("[data-role=footer]").html(this.footerView.render().el);
+        this.renderFooter();
+
+        this.footerView._update();
         
         $(this.el).trigger('create');
+
+        $.mobile.fixedToolbars.show(true);
 
         return this;
       },
       add:function(e) {
           e.preventDefault();
           window.TodosRouter.navigate("new-todo-detail", true);  
+      },
+      _renderFooter: function() {
+        $(this.el).find("[data-role=footer]").html(this.footerView.render().el);
       }
     });
     
@@ -137,7 +158,7 @@
      */
     window.TodoListItemView = Backbone.View.extend({
       events: {
-        'click div' : 'toggleDone'
+        "change input[type='checkbox']": 'toggleDone'
       },
       initialize: function() {
           this.template = _.template($('#listItemView').html());
@@ -150,7 +171,6 @@
         return this;
       },
       toggleDone: function() {
-
         var done = this.model.get('done');
         if (!done) {
           this.model.set({done:true});
@@ -165,7 +185,7 @@
         e.preventDefault();
         window.TodosRouter.navigate("todo-detail/"+this.model.id, true);
       }
-    })
+    });
    
     /*
      * List Edit View
@@ -241,7 +261,8 @@
        el: '#itemDetail',
        events: {
            'click a.save': 'save',
-           'click a.back': 'list'
+           'click a.back': 'list',
+           'focus .todo-input': 'focus'
        },
        initialize: function() {
          this.template = _.template($('#itemDetailTemplate').html());
@@ -276,6 +297,12 @@
       list: function(e) {
          e.preventDefault();
          window.TodosRouter.navigate("list", true);  
+      },
+      focus: function() {
+        var txtfld$ = $(this.el).find('.todo-input');
+        if(txtfld$.val() === "empty todo...") {
+          txtfld$.val('');
+        }  
       }
     });
                   

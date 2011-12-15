@@ -43,17 +43,49 @@ div.done {
   text-decoration: line-through;
 }
 
+div.ui-page {
+  background: white;
+}
+
 .ui-checkbox .ui-btn-corner-all {
--moz-border-radius: 0;
+/*-moz-border-radius: 0;
 -webkit-border-radius: 0;
-border-radius: 0;
+border-radius: 0;*/
 }
 .ui-checkbox .ui-btn-up-c, .ui-checkbox .ui-btn-hover-c {
-  border: none;
-  background: #F0F0F0;
+  /*border: none;*/
+  /*background: #F0F0F0;
   background-image: -webkit-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
   background-image: -moz-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
   background-image: -ms-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
   background-image: -o-linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end}*/);
   background-image: linear-gradient(#eee /*{c-body-background-start}*/, #ddd /*{c-body-background-end)*/);
+    */
+   background-image: none;
+   background: white; 
+   border-top: 1px solid lightgray;
+   /*border-left: none;*/
+   /*border-right: none;*/
+   padding: 6px 0; 
 }
+
+.todo-list-footer {
+  color:white;
+}
+
+.todo-list-footer .todoCount {
+  float:left;
+  margin-left: 20px;
+}
+
+.todo-list-footer .clear {
+  float:right;
+  margin-right: 20px;
+}
+
+.todo-list-footer a:visited, .todo-list-footer a:hover, .todo-list-footer a:active, .todo-list-footer a:link {
+  color:white;
+  text-shadow:none;
+  font-weight:normal;
+}
+
