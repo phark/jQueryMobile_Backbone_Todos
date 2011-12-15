@@ -15,7 +15,10 @@ $(document).bind("mobileinit", function(){
 	// Prevent all anchor click handling including the addition of active 
 	// button state and alternate link bluring.  This is we can allow Backbone
 	// to handle these requests.
-	linkBindingEnabled:false  
+	linkBindingEnabled:false,
+	
+	// Attempt to show true fixed toolbars
+  	touchOverflowEnabled : true 
   });
 
   // Don't let jQM update the hash in the location bar.  Let Backbone drive this.

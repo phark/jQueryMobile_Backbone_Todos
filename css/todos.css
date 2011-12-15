@@ -84,7 +84,7 @@ border-radius: 0;*/
 }
 
 .todo-list-footer a:visited, .todo-list-footer a:hover, .todo-list-footer a:active, .todo-list-footer a:link {
-  color:white;
+  color:white !important;
   text-shadow:none;
   font-weight:normal;
 }
